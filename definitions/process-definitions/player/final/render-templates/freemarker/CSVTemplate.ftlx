@@ -1,0 +1,4 @@
+id,title,description
+<#list contentItems as contentItem>
+${contentItem['id']},${contentItem['title']},${contentItem['description']}
+</#list>

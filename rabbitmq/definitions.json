@@ -1,0 +1,163 @@
+{
+  "rabbit_version": "3.8.12",
+  "rabbitmq_version": "3.8.12",
+  "product_name": "RabbitMQ",
+  "product_version": "3.8.12",
+  "users": [
+    {
+      "name": "guest",
+      "password_hash": "K3A3FHiIJj1L2EMLc+OYa3MiRMzdWEkdBTPxNnFhYgc+6Ork",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": "administrator",
+      "limits": {}
+    },
+    {
+      "name": "cdpl-dataset-provider",
+      "password_hash": "K3A3FHiIJj1L2EMLc+OYa3MiRMzdWEkdBTPxNnFhYgc+6Ork",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": "administrator",
+      "limits": {}
+    },
+    {
+      "name": "cdpl-platform",
+      "password_hash": "K3A3FHiIJj1L2EMLc+OYa3MiRMzdWEkdBTPxNnFhYgc+6Ork",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": "administrator",
+      "limits": {}
+    },
+    {
+      "name": "ivi-delivery-service",
+      "password_hash": "K3A3FHiIJj1L2EMLc+OYa3MiRMzdWEkdBTPxNnFhYgc+6Ork",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": "administrator",
+      "limits": {}
+    }
+  ],
+  "vhosts": [
+    {
+      "name": "content-delivery-platform"
+    }
+  ],
+  "permissions": [
+    {
+      "user": "guest",
+      "vhost": "content-delivery-platform",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
+    {
+      "user": "cdpl-dataset-provider",
+      "vhost": "content-delivery-platform",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
+    {
+      "user": "cdpl-platform",
+      "vhost": "content-delivery-platform",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
+    {
+      "user": "ivi-delivery-service",
+      "vhost": "content-delivery-platform",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    }
+  ],
+  "topic_permissions": [],
+  "parameters": [],
+  "global_parameters": [
+    {
+      "name": "cluster_name",
+      "value": "rabbit@2a268bf1c618"
+    },
+    {
+      "name": "internal_cluster_id",
+      "value": "rabbitmq-cluster-id-KTaseY61ZZCrjoIpiWTVgw"
+    }
+  ],
+  "policies": [],
+  "queues": [
+    {
+      "name": "arc.content.events",
+      "vhost": "content-delivery-platform",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-queue-type": "classic"
+      }
+    },
+    {
+      "name": "dataset_provider.content.events",
+      "vhost": "content-delivery-platform",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-queue-type": "classic"
+      }
+    },
+    {
+      "name": "cdpl.ids.internal.freewheel.items.failed",
+      "vhost": "content-delivery-platform",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-queue-type": "classic"
+      }
+    },
+    {
+      "name": "cdpl.ids.internal.freewheel.items.redelivery",
+      "vhost": "content-delivery-platform",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-queue-type": "classic"
+      }
+    },
+    {
+      "name": "process_orchestrator.read_model.events",
+      "vhost": "content-delivery-platform",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-queue-type": "classic",
+        "x-max-priority": 10
+      }
+    },
+    {
+      "name": "cdp.ids.freewheel.items",
+      "vhost": "content-delivery-platform",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-queue-type": "classic",
+        "x-max-priority": 10
+      }
+    }
+  ],
+  "exchanges": [
+    {
+      "name": "process_orchestrator.read_model.events",
+      "vhost": "content-delivery-platform",
+      "type": "topic",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    }
+  ],
+  "bindings": [
+    {
+      "source": "process_orchestrator.read_model.events",
+      "vhost": "content-delivery-platform",
+      "destination": "cdp.ids.freewheel.items",
+      "destination_type": "queue",
+      "routing_key": "read_model.items.freewheel.final.*",
+      "arguments": {}
+    }
+  ]
+}

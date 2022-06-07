@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/" xmlns:dfpvideo="http://api.google.com/dfpvideo"
+     xmlns:openSearch="http://a9.com/-/spec/opensearchrss/1.0/" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>[Demo 1] ViacomCBS Plex DAI Content Feed</title>
+        <description>Content items for: ${endpoint}</description>
+        <dfpvideo:version>2</dfpvideo:version>
+        <openSearch:totalResults>${itemsCount?c}</openSearch:totalResults>
+        <openSearch:totalFetchedResults>${contentItems?size?c}</openSearch:totalFetchedResults>
+        <atom:link rel="self" href="${selfUrl}"/>
+        <#if nextUrl??>
+        <atom:link rel="next" href="${nextUrl}"/>
+        </#if>
+        <#list contentItems as contentItem>
+        <item>
+            <title><![CDATA[<#noautoesc>"${contentItem['title']}"</#noautoesc>]]></title>
+            <#if contentItem['contentID']??>
+            <dfpvideo:contentID>${contentItem['contentID']}</dfpvideo:contentID>
+            <#else>
+            <dfpvideo:contentID/>
+            </#if>
+            <#if contentItem['fwCaid']??>
+            <dfpvideo:fw_caid>${contentItem['fwCaid']}</dfpvideo:fw_caid>
+            <#else>
+            <dfpvideo:fw_caid/>
+            </#if>
+            <#if contentItem["lastModifiedDate"]??>
+            <dfpvideo:lastModifiedDate>${contentItem["lastModifiedDate"]}</dfpvideo:lastModifiedDate>
+            <#else>
+            <dfpvideo:lastModifiedDate/>
+            </#if>
+            <dfpvideo:owner name="ViacomCBS ARC"/>
+            <#if contentItem['contentDuration']??>
+            <media:content url="https://www.viacbs.com/" duration="${contentItem['contentDuration']?c}"/>
+            <#else>
+            <media:content url="https://www.viacbs.com/"/>
+            </#if>
+            <media:status state="active"/>
+            <#if contentItem['thumbnailUrl']??>
+            <media:thumbnail url="${contentItem['thumbnailUrl']!}"/>
+            <#else>
+            <media:thumbnail/>
+            </#if>
+            <#if contentItem["pubDate"]??>
+            <pubDate>${contentItem['pubDate']}</pubDate>
+            </#if>
+            <#if contentItem['ingestUrl']??>
+            <dfpvideo:ingestUrl type="application/x-mpegURL" preconditioned="true">${contentItem['ingestUrl']}</dfpvideo:ingestUrl>
+            <#else>
+            <dfpvideo:ingestUrl type="application/x-mpegURL" preconditioned="true"/>
+            </#if>
+            <#if contentItem['closedCaptionUrl']??>
+            <dfpvideo:closedCaptionUrl language="en-US" type="text/vtt">${contentItem["closedCaptionUrl"]}</dfpvideo:closedCaptionUrl>
+            </#if>
+            <#if contentItem['cuepoints']??>
+            <dfpvideo:cuepoints>${contentItem['cuepoints']}</dfpvideo:cuepoints>
+            </#if>
+            <#if contentItem["lastModifiedDate"]??>
+            <dfpvideo:lastMediaModifiedDate>${contentItem["lastModifiedDate"]}</dfpvideo:lastMediaModifiedDate>
+            <#else>
+            <dfpvideo:lastMediaModifiedDate/>
+            </#if>
+        </item>
+        </#list>
+    </channel>
+</rss>

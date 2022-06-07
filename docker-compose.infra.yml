@@ -1,0 +1,45 @@
+version: '2.4'
+services:
+  docker-host: # container added in order to circumvent docker's limitation on Linux in resolving host.docker.internal host name
+    image: qoomon/docker-host:2.5.5
+    cap_add: [ 'NET_ADMIN', 'NET_RAW' ]
+
+  redis:
+    image: "redis:5.0.8"
+    ports:
+      - "6379:6379"
+    depends_on: [ docker-host ]
+
+  cdp_db:
+    container_name: cdp_db
+    image: postgres:12.7
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db-config:/docker-entrypoint-initdb.d
+    environment:
+      POSTGRES_MULTIPLE_DATABASES: validation_reports,dataset_provider,process_orchestrator
+      POSTGRES_USER: cdp_admin
+      POSTGRES_PASSWORD: cdp_pass
+    depends_on: [ docker-host ]
+
+  rabbit:
+    container_name: cdp_rabbit
+    image: rabbitmq:3.8.12-management
+    volumes:
+      - ./rabbitmq:/etc/rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    depends_on: [ docker-host ]
+
+  validation_s3:
+    container_name: validation_s3
+    image: "adobe/s3mock"
+    restart: always
+    environment:
+      root: /tmp/reports
+    ports:
+      - "9191:9191"
+    depends_on: [ docker-host ]

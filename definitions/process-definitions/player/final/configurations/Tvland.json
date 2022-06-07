@@ -1,0 +1,20 @@
+{
+  "enabled": true,
+  "queryPlan": {
+    "plan": "GoogleDaiShowVideos",
+    "endpoints": ["tvland.com"],
+    "onlyActiveDp": true,
+    "stage": "live",
+    "refreshCache": true
+  },
+  "validationProfile": "google-dai",
+  "transformationPlan": "DefaultTransformPlan.groovy",
+  "renderTemplate": "DefaultTemplate",
+  "meta": {
+    "Feed Type": "Full",
+    "Category": "PoC",
+    "Feed Owner": "Konrad Starzyk",
+    "Brand": "Tvland",
+    "Platform": "All Platforms"
+  }
+}

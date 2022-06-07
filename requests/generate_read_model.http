@@ -1,0 +1,2 @@
+
+POST http://localhost:8081/process/generation-tasks?processDefinitionName=player&state=final&processConfigurationName=Tvland
